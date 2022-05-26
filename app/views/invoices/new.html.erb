@@ -1,0 +1,10 @@
+<h1>New Invoice</h1>
+<%= form_with model: @invoice do |form| %>
+        <%= form.label :client_name, "Client_name:" %>
+        <%= form.text_field :client_name %>
+
+        <%= form.submit "Search" %>
+      
+      
+  <% end %>
+  
