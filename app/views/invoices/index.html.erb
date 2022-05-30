@@ -1,7 +1,7 @@
 <h1>Home page</h1>
  <ul>
   <% @invoices.each do |invoice| %> 
-   <li><%= invoice.id %><%= invoice.client_name %><%= invoice.invoices_total %><%= invoice.expence_date %></li>
+   <li><%= invoice.id %><%= invoice.invoice_number %><%= invoice.client_name %><%= invoice.invoices_total %><%= invoice.expence_date %></li>
  </ul>
   <% end %>
  <%= link_to 'New Invoice', "invoices/new" %>
