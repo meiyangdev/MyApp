@@ -1,12 +1,20 @@
 <h1>New Invoice</h1>
 <%= form_with model: @invoice do |form| %>
-        <%= form.label :client_name, "Client_name:" %>
+        <%= form.label :invoice_id , "Invoice Id: " %>
+        <%= form.text_field :invoice_id %></br>
+        <%= form.label :client_name , "Client Name: " %>
         <%= form.text_field :client_name %></br>
-        <%= form.label :invoices_total, "Invoices_total:" %>
+        <%= form.label :invoice_item , "Invoice Item: " %>
+        <%= form.text_field :invoice_item %></br>
+        <%= form.label :quantity , "Quantity: " %>
+        <%= form.text_field :quantity %></br>
+        <%= form.label :invoices_total, "Invoices Total:" %>
         <%= form.text_field :invoices_total %></br>
-        <%= form.label :expence_date, "expence_date:" %>
+        <%= form.label :expence_date, "Expence Date:" %>
         <%= form.text_field :expence_date %></br>
-        
       <%= form.submit "Submit" %>
   <% end %>
+  <%= link_to 'home', root_path %>
+  <%= root_path %>
+  
   

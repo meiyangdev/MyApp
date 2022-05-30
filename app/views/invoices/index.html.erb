@@ -1,10 +1,10 @@
 <h1>Home page</h1>
-<% @invoices.each do |invoice| %> 
-    <%= link_to 'New Invoice', "invoices/new" %>
-			<div > 
-  			<p ><%= invoice.id %></p> 
-  			<p ><%= invoice.client_name %></p> 
-            <p ><%= invoice.invoices_total %></p> 
-            <p ><%= invoice.expence_date %></p> 
-			</div> 
-		<% end %>
+ <ul>
+  <% @invoices.each do |invoice| %> 
+   <li><%= invoice.id %><%= invoice.client_name %><%= invoice.invoices_total %><%= invoice.expence_date %></li>
+ </ul>
+  <% end %>
+ <%= link_to 'New Invoice', "invoices/new" %>
+    
+			
+		
