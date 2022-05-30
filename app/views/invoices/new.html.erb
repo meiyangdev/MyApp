@@ -1,10 +1,21 @@
 <h1>New Invoice</h1>
 <%= form_with model: @invoice do |form| %>
-        <%= form.label :client_name, "Client_name:" %>
-        <%= form.text_field :client_name %>
-
-        <%= form.submit "Search" %>
-      
-      
-  <% end %>
+     
+        <%= form.label :client_name , "Client Name: " %>
+        <%= form.text_field :client_name %></br>
+        <%= form.label :invoice_item , "Invoice Item: " %>
+        <%= form.text_field :invoice_item %></br>
+         <%= form.label :price, "Price/item:" %>
+        <%= form.text_field :price %></br>
+        <%= form.label :quantity , "Quantity: " %>
+        <%= form.text_field :quantity %></br>
+       
+        <%= form.label :expence_date, "Expence Date:" %>
+        <%= form.text_field :expence_date %></br>
+      <%= form.submit "Submit" %>
+       
+  <% end %> 
+  <%= link_to 'home', root_path %>
+ 
+  <%# %>
   

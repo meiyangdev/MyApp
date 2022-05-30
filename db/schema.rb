@@ -10,20 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_25_222419) do
+ActiveRecord::Schema.define(version: 2022_05_30_033454) do
 
-  create_table "invoices", force: :cascade do |t|
-    t.integer "invoice_number"
-    t.string "client_name"
-    t.decimal "invoices_total"
-    t.date "expence_date"
+  create_table "clients", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "my_models", force: :cascade do |t|
+  create_table "invoices", force: :cascade do |t|
+    t.string "invoice_id"
+    t.integer "user_id"
+    t.string "client_name"
+    t.string "invoice_item"
+    t.decimal "quantity"
+    t.decimal "invoices_total"
+    t.date "expence_date"
+    t.boolean "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "price"
   end
 
 end
