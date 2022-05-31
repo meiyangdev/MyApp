@@ -8,7 +8,7 @@ class InvoicesController < ApplicationController
     end
     def create
         @invoice = Invoice.new(invoice_params)
-       
+        @invoice.status = FALSE
         @invoice.invoices_total = @invoice.price * @invoice.quantity
            if @invoice.save
                  redirect_to invoices_path
@@ -30,6 +30,20 @@ class InvoicesController < ApplicationController
     end
     def edit
         @invoice = Invoice.find(params[:id])
+    end
+    def update
+        @invoice = Invoice.find(params[:id])
+        #byebug
+         if @invoice.update_attributes(invoice_params)
+          redirect_to(:action => 'show', :id => @invoice.id) 
+        else 
+          render 'edit' 
+        end   
+    end
+    def destroy
+      @invoice = Invoice.find(params[:id])
+      @invoice.destroy
+      redirect_to invoices_path
     end
     private 
   def invoice_params 

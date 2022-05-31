@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   
   root 'invoices#index' 
   resources :invoices
+  #resources :invoices, only: [:index, :show]
+
+ 
   
    
 end
