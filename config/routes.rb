@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   
   root 'invoices#index' 
   resources :invoices
+  get 'view_invoice/:uuid' => 'invoices#view_invoice', as: :view_invoice
   #resources :invoices, only: [:index, :show]
 
  
