@@ -1,0 +1,16 @@
+<%= form_with model: @client do |form|%>
+<div class="form-group row" > 
+       <div class="col">
+       <%= form.label :name , "Client Name: " %>
+        <%= form.text_field :name %>
+      </div>
+      <div class="col">
+        <%= form.label :email , "Email: " %>
+        <%= form.text_field :email %>
+      </div>
+    </div> 
+      <div>
+      <%= form.submit "Submit", class: "btn btn-primary" %>
+      </div>
+ 
+  <% end %>  <br>
