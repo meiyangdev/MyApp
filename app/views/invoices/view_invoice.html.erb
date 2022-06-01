@@ -4,7 +4,7 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">Invoice_number</th>
-      <th scope="col">Client Name</th>
+      <th scope="col">Client ID</th>
       <th scope="col">Invoice Item</th>
       <th scope="col">Price</th>
       <th scope="col">Quantity</th>
@@ -15,7 +15,7 @@
   <tbody>
     <tr>
       <th scope="row"><%= @invoice.invoice_number %></th>
-      <td><%= @invoice.client_name %></td>
+      <td><%= @invoice.client_id %></td>
       <td><%= @invoice.invoice_item %></td>
       <td><%= @invoice.price %></td>
       <td><%= @invoice.quantity %></td>

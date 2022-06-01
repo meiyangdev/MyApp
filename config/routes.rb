@@ -3,10 +3,8 @@ Rails.application.routes.draw do
   
   root 'invoices#index' 
   resources :invoices
+  resources :clients
   get 'view_invoice/:uuid' => 'invoices#view_invoice', as: :view_invoice
-  #resources :invoices, only: [:index, :show]
-
- 
-  
-   
+  #resources :invoices, only: [:index, :show] 
 end
+    
