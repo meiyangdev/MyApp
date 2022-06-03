@@ -7,10 +7,12 @@
       <th scope="col">Status</th>
     </tr>
   </thead>
-   <% @invoices.each do |invoice| %> 
+  <% @invoices.each do |invoice| %>
   <tbody>
     <tr>
-      <th scope="row"><a href= "/invoices/<%=invoice.id%>"> <%= invoice.invoice_number %></a></th>
+      <th scope="row">
+        <a href="/invoices/<%=invoice.id%>"> <%= invoice.invoice_number %></a>
+      </th>
       <td><%= invoice.client_id %></td>
       <td><%= invoice.invoices_total %></td>
       <td><%= invoice.status %></td>
