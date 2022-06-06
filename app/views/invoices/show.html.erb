@@ -18,10 +18,10 @@
       <td><%= @invoice.status %></td>
     </tr>
   </tbody>
-  
+   
 </table>
 <%= button_to "Edit", { :action => "edit" }, :method => :get %>
-<p>email to client</p>
+<%# <p>email to client</p> %>
 <%#= link_to "View", view_invoice_path(@invoice.uuid) %>
 <%= button_to "ViewInvoice", { :action => "view_invoice", :uuid => @invoice.uuid }, :method => :get %>
 <%= button_to "Delete", { :action => "destroy" }, :method => :delete %>
