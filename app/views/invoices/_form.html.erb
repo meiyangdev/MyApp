@@ -5,22 +5,69 @@
     current_user.clients.collect{|client| [client.name, client.id ]} %>
   </div>
 </div>
-<div class="form-group row">
-  <div class="col">
-    <%= form.label :invoice_item , "Invoice Item: " %> <%= form.text_field :invoice_item %>
-  </div>
-  <div class="col">
-    <%= form.label :expence_date, "Expence Date:" %> <%= form.text_field :expence_date %>
-  </div>
+<div class="form-group" id="fieldsetContainer">
+  <fieldset id="0">
+    <%= form.fields_for :items do |item| %>
+    <div class="form-row">
+      <div class="col">
+        <%= item.label :invoice_item, "Invoice Item: " %>
+        <%= item.text_field :invoice_item %>
+      </div>
+      <div class="col">
+        <%= item.label :price, "Price/item: " %>
+        <%= item.text_field :price %>
+      </div>
+      <div class="col">
+        <%= item.label :quantity , "Quantity: " %>
+        <%= item.text_field :quantity %>
+      </div> 
+    </div>
+    <div class="form-row">
+        <%#= content_tag('a', 'DEL', id: "del-"+item.index.to_s, class:"badge badge-danger align-self-center")  %>
+        <button id="Delete"> Delete</button> 
+    </div>
+    <% end %>
+    </fieldset>
 </div>
+<div class="form-group">
+    <button id="addItem"> Add Item</button>
+</div>
+
 <div class="form-group row">
-  <div class="col">
-    <%= form.label :price, "Price/item:" %> <%= form.text_field :price %>
-  </div>
-  <div class="col">
-    <%= form.label :quantity , "Quantity: " %> <%= form.text_field :quantity %>
+ <div class="col">
+    <%= form.label :expence_date, "Expense Date:" %> <%= form.text_field :expence_date %>
   </div>
 </div>
 <div><%= form.submit "Submit", class: "btn btn-primary" %></div>
 
-<% end %> <br />
+<% end %> 
+
+<script>
+
+  const createButton = document.getElementById("addItem")
+  createButton.addEventListener("click", (e)=>{
+   e.preventDefault()
+    const lastId = document.querySelector('#fieldsetContainer').lastElementChild.id;
+
+    const newId = parseInt(lastId, 10) + 1;
+
+    const newFieldset = document.getElementById('0').outerHTML.replace(/0/g,newId);
+
+    document.querySelector('#fieldsetContainer').insertAdjacentHTML(
+        'beforeend', newFieldset
+    ) 
+   })
+  
+  // const deleteButton = document.getElementById("Delete")
+  // deleteButton.addEventListener("click", (e) => {
+  //   e.preventDefault()
+  //   const deleteFieldSet = document.findElementById(id)
+
+    // if ( e.target.nodeName === "A" &&
+    //      e.target.parentNode.previousElementSibling) {
+
+    //   e.target.parentNode.remove();
+    // }
+  //});
+  
+</script>

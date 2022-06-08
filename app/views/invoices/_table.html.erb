@@ -3,6 +3,7 @@
     <tr>
       <th scope="col">Invoice_number</th>
       <th scope="col">Client ID</th>
+      <th scope="col">Client Name</th>
       <th scope="col">Invoice Total</th>
       <th scope="col">Status</th>
     </tr>
@@ -14,6 +15,7 @@
         <a href="/invoices/<%=invoice.id%>"> <%= invoice.invoice_number %></a>
       </th>
       <td><%= invoice.client_id %></td>
+      <td><%= invoice.client.name %></td> 
       <td><%= invoice.invoices_total %></td>
       <td><%= invoice.status %></td>
     </tr>

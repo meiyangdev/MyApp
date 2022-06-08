@@ -5,6 +5,7 @@ class InvoicesController < ApplicationController
 
   def new
     @invoice = Invoice.new
+    @invoice.items.build
   end
 
   def create
@@ -12,8 +13,10 @@ class InvoicesController < ApplicationController
     puts invoice_params
     @invoice.status = false
     @invoice.uuid = SecureRandom.uuid
-    @invoice.invoices_total = @invoice.price * @invoice.quantity
-
+    @invoice.invoices_total = invoice_params[:items_attributes].values.map do |item|
+      # byebug
+      item['price'].to_f * item['quantity'].to_f
+    end.sum
     if @invoice.save
       redirect_to invoices_path
     else
@@ -42,7 +45,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     # byebug
     if @invoice.update_attributes(invoice_params)
-      @invoice.invoices_total = @invoice.price * @invoice.quantity
+      @item.invoices_total = @item.price * @item.quantity
       redirect_to(action: 'show', id: @invoice.id)
     else
       render 'edit'
@@ -62,7 +65,7 @@ class InvoicesController < ApplicationController
   private
 
   def invoice_params
-    params.require(:invoice).permit(:client_id, :invoice_id, :price, :invoice_item, :quantity, :invoices_total,
-                                    :expence_date)
+    params.require(:invoice).permit(:client_id, :invoice_id, :invoices_total,
+                                    :expence_date, items_attributes: %i[price quantity invoice_item])
   end
 end
