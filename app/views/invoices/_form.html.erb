@@ -23,14 +23,16 @@
       </div> 
     </div>
     <div class="form-row">
-        <%#= content_tag('a', 'DEL', id: "del-"+item.index.to_s, class:"badge badge-danger align-self-center")  %>
-        <button id="Delete"> Delete</button> 
+ <%= button_tag('DEL', id: "del-"+item.index.to_s, type: "button", class: "deleteButtons")  %>
+  
+
+        
     </div>
     <% end %>
     </fieldset>
 </div>
 <div class="form-group">
-    <button id="addItem"> Add Item</button>
+    <button id="addItem",type: "button"> Add Item</button>
 </div>
 
 <div class="form-group row">
@@ -44,6 +46,26 @@
 
 <script>
 
+  // function deleteRow(id) {
+    
+  // }
+
+  // function onDeleteClick(event) {
+  //   if (condition) {
+  //     deleteRow(event.target.id)
+  //   }
+  //   else {
+  //     alert()
+  //   }
+  // }
+  
+  // function onCreateClick(event) {
+    
+  // }
+
+  // createButton.addEventListener("click", onCreateClick)
+  // deleteButton.addEventListener("click", onDeleteClick)
+
   const createButton = document.getElementById("addItem")
   createButton.addEventListener("click", (e)=>{
    e.preventDefault()
@@ -56,18 +78,25 @@
     document.querySelector('#fieldsetContainer').insertAdjacentHTML(
         'beforeend', newFieldset
     ) 
+    const deleteButtons = Array.from(document.querySelectorAll('.deleteButtons'))
+    console.log(deleteButtons)
+    console.log(typeof deleteButtons)
+    deleteButtons.forEach(deleteButton => deleteButton.addEventListener("click", (e)=>{
+      console.log(e.target.id)
+      deleteButtons.forEach(deleteButton => {
+        if (deleteButton.id == e.target.id) {
+          deleteButton.closest('fieldset').remove()
+        }
+      })
+    })
+    )
+
+
    })
-  
-  // const deleteButton = document.getElementById("Delete")
-  // deleteButton.addEventListener("click", (e) => {
-  //   e.preventDefault()
-  //   const deleteFieldSet = document.findElementById(id)
+  // Find all delete buttons - add a class to the button e.g class="delete-button" getElementsByClassName or document.querySelectorAll('.delete-button')
+  // loop all delete buttons
+  // bind an event for each button e.g deleteButtons.forEach ( button => button.addEventListener('click', onDeleteClick))
+  // create onDeleteClick() function. Remove the wrapper/row and remove eventListener  
 
-    // if ( e.target.nodeName === "A" &&
-    //      e.target.parentNode.previousElementSibling) {
-
-    //   e.target.parentNode.remove();
-    // }
-  //});
   
 </script>

@@ -5,4 +5,9 @@ class Invoice < ApplicationRecord
   def invoice_number
     'INV%05d' % id
   end
+  enum status: {
+    draft: 0,
+    published: 1,
+    paid: 2
+  }
 end
