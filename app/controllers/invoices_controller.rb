@@ -11,10 +11,8 @@ class InvoicesController < ApplicationController
   def create
     @invoice = current_user.invoices.new(invoice_params)
     puts invoice_params
-    @invoice.status = false
     @invoice.uuid = SecureRandom.uuid
     @invoice.invoices_total = invoice_params[:items_attributes].values.map do |item|
-      # byebug
       item['price'].to_f * item['quantity'].to_f
     end.sum
     if @invoice.save

@@ -6,30 +6,27 @@
   </div>
 </div>
 <div class="form-group" id="fieldsetContainer">
-  <fieldset id="0">
-    <%= form.fields_for :items do |item| %>
-    <div class="form-row">
-      <div class="col">
-        <%= item.label :invoice_item, "Invoice Item: " %>
-        <%= item.text_field :invoice_item %>
+  <%= form.fields_for :items do |item| %>
+    <fieldset>
+      <div class="form-row">
+        <div class="col">
+          <%= item.label :invoice_item, "Invoice Item: " %>
+          <%= item.text_field :invoice_item %>
+        </div>
+        <div class="col">
+          <%= item.label :price, "Price/item: " %>
+          <%= item.text_field :price %>
+        </div>
+        <div class="col">
+          <%= item.label :quantity , "Quantity: " %>
+          <%= item.text_field :quantity %>
+        </div> 
       </div>
-      <div class="col">
-        <%= item.label :price, "Price/item: " %>
-        <%= item.text_field :price %>
+      <div class="form-row">
+        <%= button_tag('DEL', id: "del-"+item.index.to_s, type: "button", class: "deleteButtons")  %>  
       </div>
-      <div class="col">
-        <%= item.label :quantity , "Quantity: " %>
-        <%= item.text_field :quantity %>
-      </div> 
-    </div>
-    <div class="form-row">
- <%= button_tag('DEL', id: "del-"+item.index.to_s, type: "button", class: "deleteButtons")  %>
-  
-
-        
-    </div>
-    <% end %>
     </fieldset>
+  <% end %>
 </div>
 <div class="form-group">
     <button id="addItem",type: "button"> Add Item</button>
@@ -45,58 +42,88 @@
 <% end %> 
 
 <script>
-
-  // function deleteRow(id) {
-    
-  // }
-
-  // function onDeleteClick(event) {
-  //   if (condition) {
-  //     deleteRow(event.target.id)
-  //   }
-  //   else {
-  //     alert()
-  //   }
-  // }
-  
-  // function onCreateClick(event) {
-    
-  // }
-
-  // createButton.addEventListener("click", onCreateClick)
-  // deleteButton.addEventListener("click", onDeleteClick)
-
   const createButton = document.getElementById("addItem")
-  createButton.addEventListener("click", (e)=>{
-   e.preventDefault()
-    const lastId = document.querySelector('#fieldsetContainer').lastElementChild.id;
+  
+  function onCreateClick(e) {
+    e.preventDefault()
+    const row = document.querySelector('#fieldsetContainer fieldset').cloneNode( true )
+    const invoiceItem = row.querySelector('#invoice_items_attributes_0_invoice_item')
+    invoiceItem.value = ''
+    const invoicePrice = row.querySelector('#invoice_items_attributes_0_price')
+    invoicePrice.value = ''
+    const invoiceQuantity = row.querySelector('#invoice_items_attributes_0_quantity')
+    invoiceQuantity.value = ''
+    document.getElementById('fieldsetContainer').appendChild(row)
+    
+    //document.querySelector('#fieldsetContainer').appendChild(row)
+    
+    // Get first fields set (DOM) const row = document.querySelector('#fieldsetContainer fieldset')
+    // Clear the values const 
+      //  - invoiceField = row.querySelector('#invoice_items_attributes_0_invoice_item')
+      //  - invoiceField.value = ''
+    // Insert to the DOM document.querySelector('#fieldsetContainer').appendChild(row)
+    
+    // const lastId = document.querySelector('#fieldsetContainer').lastElementChild.id;
 
-    const newId = parseInt(lastId, 10) + 1;
+    // const newId = parseInt(lastId, 10) + 1;
 
-    const newFieldset = document.getElementById('0').outerHTML.replace(/0/g,newId);
+    // const newFieldset = document.getElementById('0').outerHTML.replace(/0/g,newId);
 
-    document.querySelector('#fieldsetContainer').insertAdjacentHTML(
-        'beforeend', newFieldset
-    ) 
-    const deleteButtons = Array.from(document.querySelectorAll('.deleteButtons'))
-    console.log(deleteButtons)
-    console.log(typeof deleteButtons)
-    deleteButtons.forEach(deleteButton => deleteButton.addEventListener("click", (e)=>{
-      console.log(e.target.id)
-      deleteButtons.forEach(deleteButton => {
-        if (deleteButton.id == e.target.id) {
+    //  document.querySelector('#fieldsetContainer').insertAdjacentHTML(
+    //     'beforeend', newFieldset)
+
+    bindDeleteButtonClickEvents()
+  }
+
+  function buttonsArray() {
+    allButtons=Array.from(document.querySelectorAll('.deleteButtons'))
+    return allButtons
+  }
+  
+  function onDeleteClick(e) {
+    e.preventDefault()
+    
+    console.log(e.target)
+    e.target.closest('fieldset').remove()
+  }
+
+  function onDeleteRow(button) {
+    
+    if (button.id == e.target.id) {
+          alert("are you sure?")
           deleteButton.closest('fieldset').remove()
         }
-      })
-    })
-    )
+  } 
+  createButton.addEventListener("click", onCreateClick)
 
+  function bindDeleteButtonClickEvents() {
+    const array = buttonsArray()
+    array.forEach(deleteButton => {
+        deleteButton.addEventListener("click", onDeleteClick)
 
-   })
-  // Find all delete buttons - add a class to the button e.g class="delete-button" getElementsByClassName or document.querySelectorAll('.delete-button')
-  // loop all delete buttons
-  // bind an event for each button e.g deleteButtons.forEach ( button => button.addEventListener('click', onDeleteClick))
-  // create onDeleteClick() function. Remove the wrapper/row and remove eventListener  
-
+        })
+  }
   
-</script>
+  // const createButton = document.getElementById("addItem")
+  // createButton.addEventListener("click", (e)=>{
+  //  e.preventDefault()
+  //   const lastId = document.querySelector('#fieldsetContainer').lastElementChild.id;
+
+  //   const newId = parseInt(lastId, 10) + 1;
+
+  //   const newFieldset = document.getElementById('0').outerHTML.replace(/0/g,newId);
+
+  //   document.querySelector('#fieldsetContainer').insertAdjacentHTML(
+  //       'beforeend', newFieldset
+  //   ) 
+  //   const deleteButtons = Array.from(document.querySelectorAll('.deleteButtons'))
+  //   deleteButtons.forEach(deleteButton => deleteButton.addEventListener("click", (e)=>{
+  //     deleteButtons.forEach(deleteButton => {
+  //       if (deleteButton.id == e.target.id) {
+  //         deleteButton.closest('fieldset').remove()
+  //       }
+  //     })
+  //   })
+  //   )
+  // })
+  </script>
