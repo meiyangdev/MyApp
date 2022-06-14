@@ -22,8 +22,13 @@
   </tbody>
    
 </table>
-<%= button_to "Edit", { :action => "edit" }, :method => :get %>
-<%# <p>email to client</p> %>
-<%#= link_to "View", view_invoice_path(@invoice.uuid) %>
-<%= button_to "ViewInvoice", { :action => "view_invoice", :uuid => @invoice.uuid }, :method => :get %>
-<%= button_to "Delete", { :action => "destroy" }, :method => :delete %>
+<div class = "buttons">
+<%= button_to "Edit", edit_invoice_path, class: "btn btn-large btn-primary", method: :get  %>
+
+<%= button_to "Email To Client", invoice_send_invoice_mail_path(@invoice.id), method: :post, class: "btn btn-large btn-primary" %>
+
+<%= button_to "ViewInvoice", view_invoice_path(:uuid => @invoice.uuid), method: :get, class: "btn btn-large btn-primary" %>
+
+
+<%= button_to "Delete", { :action => "destroy" }, { class: "btn btn-large btn-primary", :method => :delete}%>
+</div>

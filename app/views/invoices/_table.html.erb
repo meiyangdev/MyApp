@@ -17,7 +17,10 @@
       <td><%= invoice.client_id %></td>
       <td><%= invoice.client.name %></td> 
       <td><%= invoice.invoices_total %></td>
-      <td><%= invoice.status %></td>
+      <td><%= invoice.status %>
+      <!-- <button>sent</button> -->
+      <%#= button_to "Sent", { :action => "view_invoice", :uuid => @invoice.uuid }, :method => :get %>
+      </td>
     </tr>
   </tbody>
   <% end %>

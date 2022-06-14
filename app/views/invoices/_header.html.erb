@@ -45,13 +45,8 @@
         <a class="nav-link disabled">Action</a>
       </li>
     </ul>
-
     
-      <%# <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        SignOut
-      </button> %>
       <%= link_to "Sign Out", destroy_user_session_path, :method => :delete %>
-       <%# button_to "ViewInvoice", { :action => "view_invoice", :uuid => @invoice.uuid }, :method => :get  %>
    
   </div>
 </nav>

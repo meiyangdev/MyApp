@@ -1,10 +1,11 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
     <p>You got a new invoice!</p>
-    <p>To view invoice details, please click the link here:  <%= link_to "View", view_invoice_path(uuid: @invoice.uuid) %> </p>
+    <p>To view invoice details, please click the link here:  <%= link_to "ViewInvoice", view_invoice_url(uuid: @invoice.uuid) %> </p>
     
    
   </body>

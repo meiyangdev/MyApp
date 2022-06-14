@@ -1,5 +1,5 @@
 class Invoice < ApplicationRecord
-  belongs_to :client, optional: true
+  belongs_to :client
   has_many :items, dependent: :destroy
   accepts_nested_attributes_for :items
   def invoice_number
