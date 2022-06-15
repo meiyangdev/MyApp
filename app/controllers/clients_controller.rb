@@ -5,6 +5,8 @@ class ClientsController < ApplicationController
 
   def create
     @client = Client.new(client_params)
+    @client.user_id = current_user.id
+
     if @client.save
       redirect_to root_path
     else

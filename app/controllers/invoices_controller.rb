@@ -1,19 +1,21 @@
 class InvoicesController < ApplicationController
+  skip_before_action :authenticate_user!, only: :view_invoice
   def index
     @invoices = current_user.invoices
   end
 
   def new
     @invoice = Invoice.new
+    @invoice.items.build
   end
 
   def create
+    # byebug
     @invoice = current_user.invoices.new(invoice_params)
-    puts invoice_params
-    @invoice.status = false
     @invoice.uuid = SecureRandom.uuid
-    @invoice.invoices_total = @invoice.price * @invoice.quantity
-
+    @invoice.invoices_total = invoice_params[:items_attributes].values.map do |item|
+      item['price'].to_f * item['quantity'].to_f
+    end.sum
     if @invoice.save
       redirect_to invoices_path
     else
@@ -21,28 +23,27 @@ class InvoicesController < ApplicationController
     end
   end
 
-  # test = Invoice.create
-  # test.id #=> 1
-  # test.invoices_id #=> "INV00001"
-
-  # test2 = Invoice.create
-  # test2.id #=> 2
-  # test2.invoices_id #=> "INV00002"
-
   def show
     @invoice = Invoice.find(params[:id])
     @client = @invoice
   end
 
   def edit
-    @invoice = Invoice.find(params[:id])
+    @invoice = current_user.invoices.find(params[:id])
   end
 
   def update
     @invoice = Invoice.find(params[:id])
+    # 1. Params should have a list of all ids that needs to be updated or edited
+
+    # 2. loop the id list
+
+    # 3. if it exists in the db. Update he value
+
+    # 4. If not create new item. (Db will generate a new id)
     # byebug
-    if @invoice.update_attributes(invoice_params)
-      @invoice.invoices_total = @invoice.price * @invoice.quantity
+    if @invoice.update(invoice_params)
+      @item.invoices_total = @item.price * @item.quantity
       redirect_to(action: 'show', id: @invoice.id)
     else
       render 'edit'
@@ -59,10 +60,19 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find_by(uuid: params[:uuid])
   end
 
+  def send_invoice_mail
+    @invoice = Invoice.find(params[:invoice_id])
+
+    ClientMailer.invoice_send_mail(@invoice).deliver
+    flash[:notice] = 'Invoice has been sent.'
+    @invoice.update(status: 1)
+    redirect_to invoices_path
+  end
+
   private
 
   def invoice_params
-    params.require(:invoice).permit(:client_id, :invoice_id, :price, :invoice_item, :quantity, :invoices_total,
-                                    :expence_date)
+    params.require(:invoice).permit(:client_id, :user_id, :invoices_total, :expence_date,
+                                    items_attributes: %i[price quantity invoice_item])
   end
 end

@@ -1,5 +1,6 @@
 {
   "editor.formatOnSave": true,
   "ruby.format": "rubocop",
-  "json.format.enable": false
+  "json.format.enable": false,
+  "files.insertFinalNewline": true
 }

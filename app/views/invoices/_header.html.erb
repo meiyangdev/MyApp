@@ -15,12 +15,9 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <!-- <a class="nav-link" href="/invoices/new">New Invoices <span class="sr-only">(current)</span></a> -->
-
         <%= link_to "New Invoices", new_invoice_path, class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <!-- <a class="nav-link" href="/clients/new">New Client</a> -->
         <%= link_to "New Client", new_client_path, class: "nav-link" %>
       </li>
       <li class="nav-item dropdown">
@@ -45,13 +42,6 @@
         <a class="nav-link disabled">Action</a>
       </li>
     </ul>
-
-    
-      <%# <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        SignOut
-      </button> %>
       <%= link_to "Sign Out", destroy_user_session_path, :method => :delete %>
-       <%# button_to "ViewInvoice", { :action => "view_invoice", :uuid => @invoice.uuid }, :method => :get  %>
-   
   </div>
 </nav>

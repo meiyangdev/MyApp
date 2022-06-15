@@ -10,28 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_02_020559) do
+ActiveRecord::Schema.define(version: 2022_06_15_000302) do
 
   create_table "clients", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.string "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
   end
 
   create_table "invoices", force: :cascade do |t|
     t.integer "user_id"
     t.integer "client_id"
-    t.string "invoice_item"
-    t.decimal "quantity"
-    t.decimal "invoices_total"
     t.date "expence_date"
-    t.boolean "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "price"
     t.string "uuid"
+    t.integer "status", default: 0
+    t.decimal "price", precision: 10, scale: 2
+    t.decimal "invoices_total", precision: 10, scale: 2
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "invoice_item"
+    t.decimal "quantity"
+    t.integer "invoice_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["invoice_id"], name: "index_items_on_invoice_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -46,4 +53,5 @@ ActiveRecord::Schema.define(version: 2022_06_02_020559) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "items", "invoices"
 end
