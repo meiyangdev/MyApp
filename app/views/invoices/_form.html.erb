@@ -1,7 +1,7 @@
 <%= form_with model: @invoice do |form|%>
 <div class="form-group row">
   <div class="col">
-    <%= form.label :name , "Client: "%> 
+    <%= form.label :name , "Client: "%>
     <%= form.select :client_id,
     current_user.clients.collect {|client| [client.name, client.id ]} %>
   </div>
@@ -10,21 +10,22 @@
   <%= form.fields_for :items do |item| %>
     <fieldset id="0">
       <div class="form-row" >
-        <div class="col">
+        <%#= item.hidden_field :item_id, value: item.index.to_s  %>
+        <div class="col" >
           <%= item.label :invoice_item, "Invoice Item: " %>
           <%= item.text_field :invoice_item %>
         </div>
-        <div class="col">
+        <div class="col" >
           <%= item.label :price, "Price/item: " %>
           <%= item.number_field :price, min: 0.00, step: 0.001 %>
         </div>
-        <div class="col">
+        <div class="col" >
           <%= item.label :quantity , "Quantity: " %>
-          <%= item.text_field :quantity %>
-        </div> 
+          <%= item.text_field :quantity, min: 0%>
+        </div>
       </div>
       <div class="form-row">
-        <%= button_tag('DEL', id: "del-"+item.index.to_s, type: "button ", class: "deleteButtons btn btn-large btn-primary")  %>  
+        <%= button_tag('DEL', id: "del-"+item.index.to_s, type: "button ", class: "deleteButtons btn btn-large btn-primary")  %>
       </div>
     </fieldset>
  <% end %>
@@ -43,11 +44,11 @@
     <%= form.submit "Submit", class: "btn btn-primary" %>
 </div>
 
-<% end %> 
+<% end %>
 
 <script>
   const createButton = document.getElementById("addItem")
-  
+
   function onCreateClick(e) {
     e.preventDefault()
  // const row = document.querySelector('#fieldsetContainer fieldset').cloneNode( true )
@@ -58,11 +59,11 @@
     // const invoiceQuantity = row.querySelector('#invoice_items_attributes_0_quantity')
     // invoiceQuantity.value = ''
     // document.getElementById('fieldsetContainer').appendChild(row)
-    
+
     const lastId = document.querySelector('#fieldsetContainer').lastElementChild.id;
 
     const newId = parseInt(lastId, 10) + 1;
-   
+
     // const newFieldset = document.getElementById('0').outerHTML.replace(/0/g,newId);
 
     const newFieldset =` <fieldset id="${newId}">
@@ -78,10 +79,10 @@
         <div class="col">
           <label for="invoice_items_attributes_${newId}_quantity">Quantity: </label>
           <input type="text" name="invoice[items_attributes][${newId}][quantity]" id="invoice_items_attributes_${newId}_quantity">
-        </div> 
+        </div>
       </div>
       <div class="form-row">
-        <button name="button" type="button" id="del-${newId}" class="deleteButtons btn-large btn-primary">DEL</button>  
+        <button name="button" type="button" id="del-${newId}" class="deleteButtons btn-large btn-primary">DEL</button>
       </div>
     </fieldset>`
 
@@ -94,10 +95,10 @@
     allButtons=Array.from(document.querySelectorAll('.deleteButtons'))
     return allButtons
   }
-  
+
   function onDeleteClick(e) {
     e.preventDefault()
-    
+
     if(e.target.id !== "del-0") {
     e.target.closest('fieldset').remove()
     }
@@ -114,7 +115,7 @@
 
         })
   }
-  
+
   // const createButton = document.getElementById("addItem")
   // createButton.addEventListener("click", (e)=>{
   //  e.preventDefault()
@@ -126,7 +127,7 @@
 
   //   document.querySelector('#fieldsetContainer').insertAdjacentHTML(
   //       'beforeend', newFieldset
-  //   ) 
+  //   )
   //   const deleteButtons = Array.from(document.querySelectorAll('.deleteButtons'))
   //   deleteButtons.forEach(deleteButton => deleteButton.addEventListener("click", (e)=>{
   //     deleteButtons.forEach(deleteButton => {

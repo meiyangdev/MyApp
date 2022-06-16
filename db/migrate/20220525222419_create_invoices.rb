@@ -6,7 +6,7 @@ class CreateInvoices < ActiveRecord::Migration[6.0]
       t.string :invoice_item
       t.decimal :quantity
       t.string :description
-      t.decimal :invoices_total
+      t.decimal :invoices_total, precision: 10, scale: 2
       t.date :expence_date
       t.boolean :status
 

@@ -1,3 +1,43 @@
 <h1>Edit Invoice</h1>
-<%#= form_with model: @invoice do |form|%>
-<!-- for every invoice item in invoice render fields for that item's type/quantity/price -->
+  <%= form_with model: @invoice do |form|%>
+    <div class="form-group row">
+      <div class="col">
+        <%= form.label :name , "Client: "%>
+        <%= form.select :client_id,
+        current_user.clients.collect {|client| [client.name, client.id ]} %>
+      </div>
+    </div>
+
+      <%= form.fields_for :items do |item|%>
+
+          <fieldset id="<%# index %>">
+            <div class="form-row" >
+              <div class="col">
+                <%= item.label :invoice_item, "Invoice Item: " %>
+                <%= item.text_field :invoice_item %>
+              </div>
+              <div class="col">
+                <%= item.label :price, "Price/item: " %>
+                <%= item.number_field :price, min: 0.00, step: 0.001 %>
+              </div>
+              <div class="col">
+                <%= item.label :quantity , "Quantity: " %>
+                <%= item.text_field :quantity, min: 0 %>
+              </div>
+            </div>
+            <div class="form-row">
+              <%= button_tag('DEL', id: "del-"+item.index.to_s, type: "button ", class: "deleteButtons btn btn-large btn-primary")  %>
+            </div>
+          </fieldset>
+      <% end %>
+    <div class="form-group row">
+      <div class="col">
+          <%= form.label :expence_date, "Expense Date:" %>
+          <%= form.date_field :expence_date %>
+      </div>
+    </div>
+    <div>
+        <%= form.submit "Submit", class: "btn btn-primary" %>
+    </div
+  <% end %>
+

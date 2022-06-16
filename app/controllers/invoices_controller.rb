@@ -10,12 +10,12 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    # byebug
     @invoice = current_user.invoices.new(invoice_params)
     @invoice.uuid = SecureRandom.uuid
     @invoice.invoices_total = invoice_params[:items_attributes].values.map do |item|
       item['price'].to_f * item['quantity'].to_f
     end.sum
+
     if @invoice.save
       redirect_to invoices_path
     else
@@ -33,7 +33,16 @@ class InvoicesController < ApplicationController
   end
 
   def update
-    @invoice = Invoice.find(params[:id])
+    # byebug
+    @invoice = current_user.invoices.find(params[:id])
+    if @invoice.update(invoice_params)
+      @invoice.invoices_total = invoice_params[:items_attributes].values.map do |item|
+        item['price'].to_f * item['quantity'].to_f
+      end.sum
+      redirect_to(action: 'show', id: @invoice.id)
+    else
+      render 'index'
+    end
     # 1. Params should have a list of all ids that needs to be updated or edited
 
     # 2. loop the id list
@@ -42,12 +51,12 @@ class InvoicesController < ApplicationController
 
     # 4. If not create new item. (Db will generate a new id)
     # byebug
-    if @invoice.update(invoice_params)
-      @item.invoices_total = @item.price * @item.quantity
-      redirect_to(action: 'show', id: @invoice.id)
-    else
-      render 'edit'
-    end
+    # if @invoice.update(invoice_params)
+    # @item.invoices_total = @item.price * @item.quantity
+    # redirect_to(action: 'show', id: @invoice.id)
+    # else
+    # ender 'index'
+    # end
   end
 
   def destroy
@@ -72,7 +81,7 @@ class InvoicesController < ApplicationController
   private
 
   def invoice_params
-    params.require(:invoice).permit(:client_id, :user_id, :invoices_total, :expence_date,
+    params.require(:invoice).permit(:client_id, :user_id, :invoices_total, :expence_date, :item_id,
                                     items_attributes: %i[price quantity invoice_item])
   end
 end
