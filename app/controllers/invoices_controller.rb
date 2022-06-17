@@ -33,9 +33,10 @@ class InvoicesController < ApplicationController
   end
 
   def update
-    # byebug
     @invoice = current_user.invoices.find(params[:id])
     if @invoice.update(invoice_params)
+      # byebug
+
       @invoice.invoices_total = invoice_params[:items_attributes].values.map do |item|
         item['price'].to_f * item['quantity'].to_f
       end.sum
@@ -81,7 +82,7 @@ class InvoicesController < ApplicationController
   private
 
   def invoice_params
-    params.require(:invoice).permit(:client_id, :user_id, :invoices_total, :expence_date, :item_id,
-                                    items_attributes: %i[price quantity invoice_item])
+    params.require(:invoice).permit(:id, :client_id, :user_id, :invoices_total, :expence_date,
+                                    items_attributes: %i[id price quantity invoice_item invoice_id _destroy])
   end
 end

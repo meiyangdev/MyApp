@@ -10,7 +10,6 @@
   <%= form.fields_for :items do |item| %>
     <fieldset id="0">
       <div class="form-row" >
-        <%#= item.hidden_field :item_id, value: item.index.to_s  %>
         <div class="col" >
           <%= item.label :invoice_item, "Invoice Item: " %>
           <%= item.text_field :invoice_item %>
@@ -60,7 +59,7 @@
     // invoiceQuantity.value = ''
     // document.getElementById('fieldsetContainer').appendChild(row)
 
-    const lastId = document.querySelector('#fieldsetContainer').lastElementChild.id;
+    const lastId = document.querySelector('#fieldsetContainer').lastElementChild.id.split("_")[3];
 
     const newId = parseInt(lastId, 10) + 1;
 
