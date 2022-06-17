@@ -26,8 +26,6 @@
               </div>
             </div>
             <div class="form-row">
-              <%#= link_to "add item", %>
-              <%#= button_tag('DEL', id: "del-"+item.index.to_s, type: "button ", class: "deleteButtons btn btn-large btn-primary")  %>
               <%= item.check_box :_destroy %>
               <%= item.label :_destroy, "Remove Item" %>
             </div>
@@ -50,12 +48,10 @@
 
 <script>
     const createButton = document.getElementById("addItemButton")
-    console.log(createButton)
     function onCreateClick(e) {
       e.preventDefault()
       const lastId = document.querySelector('#fieldsetContainer').lastElementChild.id.split("_")[3];
       const newId = parseInt(lastId, 10) + 1;
-      console.log(newId)
       const newFieldset =` <fieldset id="${newId}">
         <div class="form-row">
           <div class="col">

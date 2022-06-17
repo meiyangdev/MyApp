@@ -34,30 +34,14 @@ class InvoicesController < ApplicationController
 
   def update
     @invoice = current_user.invoices.find(params[:id])
+    @invoice.invoices_total = invoice_params[:items_attributes].values.map do |item|
+      item['price'].to_f * item['quantity'].to_f
+    end.sum
     if @invoice.update(invoice_params)
-      # byebug
-
-      @invoice.invoices_total = invoice_params[:items_attributes].values.map do |item|
-        item['price'].to_f * item['quantity'].to_f
-      end.sum
       redirect_to(action: 'show', id: @invoice.id)
     else
       render 'index'
     end
-    # 1. Params should have a list of all ids that needs to be updated or edited
-
-    # 2. loop the id list
-
-    # 3. if it exists in the db. Update he value
-
-    # 4. If not create new item. (Db will generate a new id)
-    # byebug
-    # if @invoice.update(invoice_params)
-    # @item.invoices_total = @item.price * @item.quantity
-    # redirect_to(action: 'show', id: @invoice.id)
-    # else
-    # ender 'index'
-    # end
   end
 
   def destroy
